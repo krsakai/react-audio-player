@@ -59,8 +59,8 @@ class ReactAudioPlayer extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.updateVolume(nextProps.volume);
+  componentDidUpdate(prevProps) {
+    this.updateVolume(this.props.volume);
   }
 
   /**
