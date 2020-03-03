@@ -1,11 +1,48 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 
-class ReactAudioPlayer extends Component {
-  constructor(props) {
-    super(props);
-    this.audioEl = React.createRef();
-  }
+interface ReactAudioPlayerProps {
+  autoPlay?: boolean
+  children?: ReactNode
+  className?: string
+  controls?: boolean
+  controlsList?: string
+  crossOrigin?: string
+  id?: string
+  listenInterval?: number
+  loop?: boolean
+  muted?: boolean
+  onAbort?: (e: Event) => void 
+  onCanPlay?: (e: Event) => void 
+  onCanPlayThrough?: (e: Event) => void 
+  onEnded?: (e: Event) => void 
+  onError?: (e: Event) => void 
+  onListen?: (time: number) => void 
+  onLoadedMetadata?: (e: Event) => void 
+  onPause?: (e: Event) => void 
+  onPlay?: (e: Event) => void 
+  onSeeked?: (e: Event) => void 
+  onVolumeChanged?: (e: Event) => void 
+  preload?: '' | 'none' | 'metadata' | 'auto'
+  src?: string, // Not required b/c can use <source>
+  style?: CSSProperties
+  title?: string
+  volume?: number
+}
+
+interface ConditionalProps {
+  controlsList?: string
+  [key: string]: any
+}
+
+class ReactAudioPlayer extends Component<ReactAudioPlayerProps, null> {
+  static propTypes: Object
+
+  static defaultProps: ReactAudioPlayerProps
+
+  audioEl = React.createRef<HTMLAudioElement>();
+
+  listenTracker?: number
 
   componentDidMount() {
     const audio = this.audioEl.current;
@@ -64,7 +101,7 @@ class ReactAudioPlayer extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: ReactAudioPlayerProps) {
     this.updateVolume(this.props.volume);
   }
 
@@ -74,7 +111,7 @@ class ReactAudioPlayer extends Component {
   setListenTrack() {
     if (!this.listenTracker) {
       const listenInterval = this.props.listenInterval;
-      this.listenTracker = setInterval(() => {
+      this.listenTracker = window.setInterval(() => {
         this.props.onListen(this.audioEl.current.currentTime);
       }, listenInterval);
     }
@@ -84,7 +121,7 @@ class ReactAudioPlayer extends Component {
    * Set the volume on the audio element from props
    * @param {Number} volume
    */
-  updateVolume(volume) {
+  updateVolume(volume: number) {
     if (typeof volume === 'number' && volume !== this.audioEl.current.volume) {
       this.audioEl.current.volume = volume;
     }
@@ -96,7 +133,7 @@ class ReactAudioPlayer extends Component {
   clearListenTrack() {
     if (this.listenTracker) {
       clearInterval(this.listenTracker);
-      this.listenTracker = null;
+      delete this.listenTracker;
     }
   }
 
@@ -112,7 +149,7 @@ class ReactAudioPlayer extends Component {
     const title = this.props.title ? this.props.title : this.props.src;
 
     // Some props should only be added if specified
-    const conditionalProps = {};
+    const conditionalProps: ConditionalProps = {};
     if (this.props.controlsList) {
       conditionalProps.controlsList = this.props.controlsList;
     }
@@ -126,7 +163,6 @@ class ReactAudioPlayer extends Component {
         id={this.props.id}
         loop={this.props.loop}
         muted={this.props.muted}
-        onPlay={this.onPlay}
         preload={this.props.preload}
         ref={this.audioEl}
         src={this.props.src}
@@ -146,7 +182,6 @@ ReactAudioPlayer.defaultProps = {
   className: '',
   controls: false,
   controlsList: '',
-  crossOrigin: null,
   id: '',
   listenInterval: 10000,
   loop: false,
@@ -163,7 +198,6 @@ ReactAudioPlayer.defaultProps = {
   onVolumeChanged: () => {},
   onLoadedMetadata: () => {},
   preload: 'metadata',
-  src: null,
   style: {},
   title: '',
   volume: 1.0,
