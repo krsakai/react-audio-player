@@ -26,71 +26,38 @@ See the example directory for a basic working example of using this project.  To
 ### Props - Native/React Attributes
 See the [audio tag documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) for detailed explanations of these attributes.
 
-#### autoPlay {Bool} [false]
-
-#### children {Element} [null]
-
-#### className {String} ['']
-
-#### controls {Bool} [false]
-
-#### crossOrigin {String} ['']
-See [MDN's article on CORS](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes) for more about this attribute.
-
-#### controlsList {String} ['']
-_For Chrome 58+. Only available in React 15.6.2+_
-
-#### id {String} ['']
-
-#### loop {Bool} [false]
-
-#### muted {Bool} [false]
-
-#### volume {Number} [1.0]
-
-#### preload {String} ['metadata']
-
-#### src {String} ['']
-
-#### style {Object} [{}]
+Prop | Type | Default | Notes
+--- | --- | --- | ---
+`autoPlay` | Boolean | false | ---
+`children` | Element | null | ---
+`className` | String | *empty string* | ---
+`controls` | Boolean | false | ---
+`crossOrigin` | String | *empty string* | See [MDN's article on CORS](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes) for more about this attribute.
+`controlsList` | String | *empty string* | For Chrome 58+. Only available in React 15.6.2+
+`id` | String | *empty string* | ---
+`loop` | Boolean | false | ---
+`muted` | Boolean | false | ---
+`volume` | Number | 1.0 | ---
+`preload` | String | 'metadata' | ---
+`src` | String | *empty string* | ---
+`style` | Object | --- | ---
 
 ### Props - Events
 
-#### listenInterval {Number} [10000]
-Indicates how often to call the `onListened` prop during playback, in milliseconds.
-
-#### onAbort {Function}
-Called when unloading the audio player, like when switching to a different src file. Passed the event.
-
-#### onCanPlay {Function}
-Called when enough of the file has been downloaded to be able to start playing.  Passed the event.
-
-#### onCanPlayThrough {Function}
-Called when enough of the file has been downloaded to play through the entire file.  Passed the event.
-
-#### onEnded {Function}
-Called when playback has finished to the end of the file. Passed the event.
-
-#### onError {Function}
-Called when the audio tag encounters an error. Passed the event.
-
-#### onListen {Function}
-Called every `listenInterval` milliseconds during playback.  Passed the event.
-
-#### onPause {Function}
-Called when the user pauses playback. Passed the event.
-
-#### onPlay {Function}
-Called when the user taps play.  Passed the event.
-
-#### onSeeked {Function}
-Called when the user drags the time indicator to a new time. Passed the event.
-
-#### onVolumeChanged {Function}
-Called when the user changes the volume, such as by dragging the volume slider.
-
-#### onLoadedMetadata {Function}
-Called when the metadata for the given audio file has finished downloading.  Passed the event.
+Prop | Type | Description
+--- | --- | --- 
+`listenInterval` | Number | Indicates how often to call the `onListened` prop during playback, in milliseconds. Default is 10000.
+`onAbort` | Function | called when unloading the audio player, like when switching to a different src file. Passed the event.
+`onCanPlay` | Function | called when enough of the file has been downloaded to be able to start playing.  Passed the event.
+`onCanPlayThrough` | Function | called when enough of the file has been downloaded to play through the entire file.  Passed the event.
+`onEnded` | Function | called when playback has finished to the end of the file. Passed the event.
+`onError` | Function | called when the audio tag encounters an error. Passed the event.
+`onListen` | Function | called every `listenInterval` milliseconds during playback.  Passed the event.
+`onPause` | Function | called when the user pauses playback. Passed the event.
+`onPlay` | Function | called when the user taps play.  Passed the event.
+`onSeeked` | Function | called when the user drags the time indicator to a new time. Passed the event.
+`onVolumeChanged` | Function | called when the user changes the volume, such as by dragging the volume slider | 
+`onLoadedMetadata` | Function | called when the metadata for the given audio file has finished downloading.  Passed the event.
 
 ## Advanced Usage
 
