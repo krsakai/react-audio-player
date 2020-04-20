@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class ReactAudioPlayer extends Component {
+  constructor(props) {
+    super(props);
+    this.audioEl = React.createRef();
+  }
+
   componentDidMount() {
-    const audio = this.audioEl;
+    const audio = this.audioEl.current;
 
     this.updateVolume(this.props.volume);
 
@@ -70,7 +75,7 @@ class ReactAudioPlayer extends Component {
     if (!this.listenTracker) {
       const listenInterval = this.props.listenInterval;
       this.listenTracker = setInterval(() => {
-        this.props.onListen(this.audioEl.currentTime);
+        this.props.onListen(this.audioEl.current.currentTime);
       }, listenInterval);
     }
   }
@@ -80,8 +85,8 @@ class ReactAudioPlayer extends Component {
    * @param {Number} volume
    */
   updateVolume(volume) {
-    if (typeof volume === 'number' && volume !== this.audioEl.volume) {
-      this.audioEl.volume = volume;
+    if (typeof volume === 'number' && volume !== this.audioEl.current.volume) {
+      this.audioEl.current.volume = volume;
     }
   }
 
@@ -123,7 +128,7 @@ class ReactAudioPlayer extends Component {
         muted={this.props.muted}
         onPlay={this.onPlay}
         preload={this.props.preload}
-        ref={(ref) => { this.audioEl = ref; }}
+        ref={this.audioEl}
         src={this.props.src}
         style={this.props.style}
         title={title}
