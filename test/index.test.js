@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
-import ReactAudioPlayer from '../src/index.jsx';
+import ReactAudioPlayer from '../src/index.tsx';
 
 describe('ReactAudioPlayer', function() {
   const song = './fixtures/turkish_march.ogg';
