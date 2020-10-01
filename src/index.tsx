@@ -35,7 +35,7 @@ interface ConditionalProps {
   [key: string]: any
 }
 
-class ReactAudioPlayer extends Component<ReactAudioPlayerProps, null> {
+class ReactAudioPlayer extends Component<ReactAudioPlayerProps> {
   static propTypes: Object
 
   static defaultProps: ReactAudioPlayerProps
