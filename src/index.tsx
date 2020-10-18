@@ -1,4 +1,4 @@
-import React, { Component, ReactNode, CSSProperties, RefObject } from 'react';
+import React, { Component, ReactNode, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 
 interface ReactAudioPlayerProps {
