@@ -44,6 +44,35 @@ class ReactAudioPlayer extends Component<ReactAudioPlayerProps> {
 
   listenTracker?: number
 
+  onError = (e: any) => this.props.onError?.(e);
+  onCanPlay = (e: any) => this.props.onCanPlay?.(e);
+  onCanPlayThrough = (e: any) => this.props.onCanPlayThrough?.(e);
+  onPlay = (e: any) => {
+    this.setListenTrack();
+    this.props.onPlay?.(e);
+  }
+  onAbort = (e: any) => {
+    this.clearListenTrack();
+    this.props.onAbort?.(e);
+  }
+  onEnded = (e: any) => {
+    this.clearListenTrack();
+    this.props.onEnded?.(e);
+  }
+  onPause = (e: any) => {
+    this.clearListenTrack();
+    this.props.onPause?.(e);
+  }
+  onSeeked = (e: any) => {
+    this.props.onSeeked?.(e);
+  }
+  onLoadedMetadata = (e: any) => {
+    this.props.onLoadedMetadata?.(e);
+  }
+  onVolumeChanged = (e: any) => {
+    this.props.onVolumeChanged?.(e);
+  }
+
   componentDidMount() {
     const audio = this.audioEl.current;
 
@@ -51,56 +80,66 @@ class ReactAudioPlayer extends Component<ReactAudioPlayerProps> {
 
     this.updateVolume(this.props.volume);
 
-    audio.addEventListener('error', (e) => {
-      this.props.onError?.(e);
-    });
+    audio.addEventListener('error', this.onError);
 
     // When enough of the file has downloaded to start playing
-    audio.addEventListener('canplay', (e) => {
-      this.props.onCanPlay?.(e);
-    });
+    audio.addEventListener('canplay', this.onCanPlay);
 
     // When enough of the file has downloaded to play the entire file
-    audio.addEventListener('canplaythrough', (e) => {
-      this.props.onCanPlayThrough?.(e);
-    });
+    audio.addEventListener('canplaythrough', this.onCanPlayThrough);
 
     // When audio play starts
-    audio.addEventListener('play', (e) => {
-      this.setListenTrack();
-      this.props.onPlay?.(e);
-    });
+    audio.addEventListener('play', this.onPlay);
 
     // When unloading the audio player (switching to another src)
-    audio.addEventListener('abort', (e) => {
-      this.clearListenTrack();
-      this.props.onAbort?.(e);
-    });
+    audio.addEventListener('abort', this.onAbort);
 
     // When the file has finished playing to the end
-    audio.addEventListener('ended', (e) => {
-      this.clearListenTrack();
-      this.props.onEnded?.(e);
-    });
+    audio.addEventListener('ended', this.onEnded);
 
     // When the user pauses playback
-    audio.addEventListener('pause', (e) => {
-      this.clearListenTrack();
-      this.props.onPause?.(e);
-    });
+    audio.addEventListener('pause', this.onPause);
 
     // When the user drags the time indicator to a new time
-    audio.addEventListener('seeked', (e) => {
-      this.props.onSeeked?.(e);
-    });
+    audio.addEventListener('seeked', this.onSeeked);
 
-    audio.addEventListener('loadedmetadata', (e) => {
-      this.props.onLoadedMetadata?.(e);
-    });
+    audio.addEventListener('loadedmetadata', this.onLoadedMetadata);
 
-    audio.addEventListener('volumechange', (e) => {
-      this.props.onVolumeChanged?.(e);
-    });
+    audio.addEventListener('volumechange', this.onVolumeChanged);
+  }
+
+  // Remove all event listeners
+  componentWillUnmount() {
+    const audio = this.audioEl.current;
+
+    if (!audio) return;
+
+    audio.removeEventListener('error', this.onError);
+
+    // When enough of the file has downloaded to start playing
+    audio.removeEventListener('canplay', this.onCanPlay);
+
+    // When enough of the file has downloaded to play the entire file
+    audio.removeEventListener('canplaythrough', this.onCanPlayThrough);
+
+    // When audio play starts
+    audio.removeEventListener('play', this.onPlay);
+
+    // When unloading the audio player (switching to another src)
+    audio.removeEventListener('abort', this.onAbort);
+
+    // When the file has finished playing to the end
+    audio.removeEventListener('ended', this.onEnded);
+
+    // When the user pauses playback
+    audio.removeEventListener('pause', this.onPause);
+
+    // When the user drags the time indicator to a new time
+    audio.removeEventListener('seeked', this.onSeeked);
+
+    audio.removeEventListener('loadedmetadata', this.onLoadedMetadata);
+
+    audio.removeEventListener('volumechange', this.onVolumeChanged);
   }
 
   componentDidUpdate(prevProps: ReactAudioPlayerProps) {
