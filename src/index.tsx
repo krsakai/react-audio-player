@@ -44,32 +44,32 @@ class ReactAudioPlayer extends Component<ReactAudioPlayerProps> {
 
   listenTracker?: number
 
-  onError = (e: any) => this.props.onError?.(e);
-  onCanPlay = (e: any) => this.props.onCanPlay?.(e);
-  onCanPlayThrough = (e: any) => this.props.onCanPlayThrough?.(e);
-  onPlay = (e: any) => {
+  onError = (e: Event) => this.props.onError?.(e);
+  onCanPlay = (e: Event) => this.props.onCanPlay?.(e);
+  onCanPlayThrough = (e: Event) => this.props.onCanPlayThrough?.(e);
+  onPlay = (e: Event) => {
     this.setListenTrack();
     this.props.onPlay?.(e);
   }
-  onAbort = (e: any) => {
+  onAbort = (e: Event) => {
     this.clearListenTrack();
     this.props.onAbort?.(e);
   }
-  onEnded = (e: any) => {
+  onEnded = (e: Event) => {
     this.clearListenTrack();
     this.props.onEnded?.(e);
   }
-  onPause = (e: any) => {
+  onPause = (e: Event) => {
     this.clearListenTrack();
     this.props.onPause?.(e);
   }
-  onSeeked = (e: any) => {
+  onSeeked = (e: Event) => {
     this.props.onSeeked?.(e);
   }
-  onLoadedMetadata = (e: any) => {
+  onLoadedMetadata = (e: Event) => {
     this.props.onLoadedMetadata?.(e);
   }
-  onVolumeChanged = (e: any) => {
+  onVolumeChanged = (e: Event) => {
     this.props.onVolumeChanged?.(e);
   }
 
