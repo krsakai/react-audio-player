@@ -188,7 +188,7 @@ class ReactAudioPlayer extends Component<ReactAudioPlayerProps> {
     const controls = !(this.props.controls === false);
 
     // Set lockscreen / process audio title on devices
-    const title = this.props.title ? this.props.title : this.props.src;
+    // const title = this.props.title ? this.props.title : this.props.src;
 
     // Some props should only be added if specified
     const conditionalProps: ConditionalProps = {};
@@ -209,7 +209,7 @@ class ReactAudioPlayer extends Component<ReactAudioPlayerProps> {
         ref={this.audioEl}
         src={this.props.src}
         style={this.props.style}
-        title={title}
+        title={this.props.title}
         {...conditionalProps}
       >
         {incompatibilityMessage}
